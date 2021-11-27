@@ -13,7 +13,7 @@ namespace Leave_Management_NET5.Models
         public DateTime DateCreated { get; set; }
         public EmployeeVM Employee { get; set; }
         public string EmployeeId { get; set; }
-        public DetailsLeaveTypeVM LeaveType { get; set; }
+        public LeaveTypeVM LeaveType { get; set; }
         public int LeaveTypeId { get; set; }
 
         public IEnumerable<SelectListItem> Employees { get; set; }

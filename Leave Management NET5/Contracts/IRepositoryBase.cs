@@ -7,6 +7,8 @@ namespace Leave_Management_NET5.Contracts
     {
         ICollection<T> findAll();
         T FindById(int id);
+
+        bool isExists(int id);
         bool Create(T entity);
         bool Update(T entity);
         bool Delete(T entity);
