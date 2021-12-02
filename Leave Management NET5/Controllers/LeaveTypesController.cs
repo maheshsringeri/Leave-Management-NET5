@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Leave_Management_NET5.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository _repo;
