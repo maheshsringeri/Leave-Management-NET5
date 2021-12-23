@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.DefaultDays)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
@@ -27,6 +30,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td style="text-align:center;">
+                    @Html.DisplayFor(modelItem => item.DefaultDays)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateCreated)
