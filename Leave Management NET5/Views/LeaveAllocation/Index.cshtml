@@ -5,13 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h2>Index</h2>
 
-<table class="table">
+<table id="tblData" class="table">
     <thead>
         <tr>
             <th>
                 Leave Types
+            </th>
+            <th>
+                Number Of Days
             </th>
             <th>Action</th>
         </tr>
@@ -24,7 +27,10 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a class="btn btn-outline-success" asp-controller="LeaveAllocation" asp-action="SetLeave" asp-route-id="@item.Id"><i class="fa fa-pencil" aria-hidden="true"></i>Allocate To Employee</a>
+                    @Html.DisplayFor(modelItem => item.DefaultDays)
+                </td>
+                <td>
+                    <a class="btn btn-outline-success btn-sm" asp-controller="LeaveAllocation" asp-action="SetLeave" asp-route-id="@item.Id"><i class="fa fa-pencil" aria-hidden="true"></i>Allocate To Employee</a>
                 </td>
             </tr>
         }

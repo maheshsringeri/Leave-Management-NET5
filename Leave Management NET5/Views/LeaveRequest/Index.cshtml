@@ -1,0 +1,129 @@
+﻿@model AdminLeaveRequestViewVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body text-center text-primary">
+                <h1 class="card-title">@Model.TotalRequests</h1>
+                <h5 class="card-text">@Html.DisplayNameFor(model=>model.TotalRequests)</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body text-center text-success">
+                <h1 class="card-title">@Model.ApprovedRequests</h1>
+                <h5 class="card-text">@Html.DisplayNameFor(model=>model.ApprovedRequests)</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body text-center text-warning">
+                <h1 class="card-title">@Model.PendingRequests</h1>
+                <h5 class="card-text">@Html.DisplayNameFor(model=>model.PendingRequests)</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body text-center text-danger">
+                <h1 class="card-title">@Model.RejectedRequests</h1>
+                <h5 class="card-text">@Html.DisplayNameFor(model=>model.RejectedRequests)</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<h2>Leave Request Log</h2>
+<table id="tblData" class="table">
+    <thead>
+        <tr>
+            <th>
+                Employee Name
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                # Days Requested
+            </th>
+            <th>
+                Leave Type
+            </th>
+            <th>
+                Date Requested
+            </th>
+            <th>
+                Approval Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.leaveRequests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestingEmployee.Firstname) @Html.DisplayFor(modelItem => item.RequestingEmployee.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalDaysRequested)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateRequested)
+                </td>
+                <td>
+                    @if (item.Cancelled == true)
+                    {
+                        <div class="badge badge-secondary">Cancelled</div>
+                    }
+                    else if (item.Approved == true)
+                    {
+                        <div class="badge badge-success">Approved</div>
+                    }
+                    else if (item.Approved == false)
+                    {
+                        <div class="badge badge-danger">Rejected</div>
+                    }
+                    else
+                    {
+                        <div class="badge badge-warning">Pending Approval</div>
+                    }
+                </td>
+                <td>
+                    @if (item.Cancelled == true)
+                    {
+                        <div class="btn btn-secondary btn-sm "><i class="fa fa-file"></i> Review</div>
+                    }
+                    else
+
+                    {
+                        <a class="btn btn-outline-primary btn-sm " asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-file"></i> Review</a>
+                    }
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

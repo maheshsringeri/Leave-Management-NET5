@@ -9,9 +9,12 @@ namespace Leave_Management_NET5.Repository
     public class LeaveTypeRepository : ILeaveTypeRepository
     {
         private readonly ApplicationDbContext _db;
-        public LeaveTypeRepository(ApplicationDbContext db)
+        private readonly ILeaveAllocationRepository leaveAllocationRepository;
+
+        public LeaveTypeRepository(ApplicationDbContext db, ILeaveAllocationRepository leaveAllocationRepository)
         {
             _db = db;
+            this.leaveAllocationRepository = leaveAllocationRepository;
         }
 
         public bool Create(LeaveType entity)
@@ -39,6 +42,24 @@ namespace Leave_Management_NET5.Repository
         public ICollection<LeaveType> GetEmployeesByLeaveType(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public List<LeaveType> GetLeaveTypesByEmployee(string employeeId)
+        {
+            var leaveAllocations = leaveAllocationRepository.findAll().Where(q => q.EmployeeId == employeeId).ToList();
+
+            var leaveTypes = findAll().Join(leaveAllocations,
+                                                LT => LT.Id,
+                                                LA => LA.LeaveTypeId,
+                                                (LT, LA) => new LeaveType
+                                                {
+                                                    Id = LT.Id,
+                                                    Name = LT.Name,
+                                                    DefaultDays = LT.DefaultDays,
+                                                    DateCreated = LT.DateCreated
+                                                }).Distinct().ToList();
+
+            return leaveTypes;
         }
 
         public bool isExists(int id)
