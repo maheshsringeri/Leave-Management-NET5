@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace Leave_Management_NET5.Controllers
 {
@@ -24,22 +25,22 @@ namespace Leave_Management_NET5.Controllers
         }
 
         // GET: LeaveTypesController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var leavetypes = _repo.findAll().ToList();
+            var leavetypes = (await _repo.findAll()).ToList();
             var model = _mapper.Map<List<LeaveType>, List<LeaveTypeVM>>(leavetypes);
             return View(model);
         }
 
         // GET: LeaveTypesController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            if (!_repo.isExists(id))
+            if (!await _repo.isExists(id))
             {
                 return NotFound();
             }
 
-            var leavetype = _repo.FindById(id);
+            var leavetype = await _repo.FindById(id);
             var model = _mapper.Map<LeaveTypeVM>(leavetype);
 
             return View(model);
@@ -54,7 +55,7 @@ namespace Leave_Management_NET5.Controllers
         // POST: LeaveTypesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LeaveTypeVM model)
+        public async Task<ActionResult> Create(LeaveTypeVM model)
         {
             try
             {
@@ -66,7 +67,7 @@ namespace Leave_Management_NET5.Controllers
                 var leaveType = _mapper.Map<LeaveType>(model);
                 leaveType.DateCreated = DateTime.Now;
 
-                var isSuccess = _repo.Create(leaveType);
+                var isSuccess = await _repo.Create(leaveType);
                 if (!isSuccess)
                 {
                     ModelState.AddModelError(string.Empty, "Something Went Wrong ...");
@@ -83,14 +84,14 @@ namespace Leave_Management_NET5.Controllers
         }
 
         // GET: LeaveTypesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            if (!_repo.isExists(id))
+            if (!await _repo.isExists(id))
             {
                 return NotFound();
             }
 
-            var leaveType = _repo.FindById(id);
+            var leaveType = await _repo.FindById(id);
             var model = _mapper.Map<LeaveTypeVM>(leaveType);
 
             return View(model);
@@ -99,7 +100,7 @@ namespace Leave_Management_NET5.Controllers
         // POST: LeaveTypesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(LeaveTypeVM model)
+        public async Task<ActionResult> Edit(LeaveTypeVM model)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace Leave_Management_NET5.Controllers
                 }
 
                 var leaveType = _mapper.Map<LeaveType>(model);
-                var isSuccess = _repo.Update(leaveType);
+                var isSuccess = await _repo.Update(leaveType);
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something Went Worng ...");
@@ -126,7 +127,7 @@ namespace Leave_Management_NET5.Controllers
         }
 
         // GET: LeaveTypesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             //if (!_repo.isExists(id))
             //{
@@ -137,13 +138,13 @@ namespace Leave_Management_NET5.Controllers
 
             //return View(model);
 
-            var leavetype = _repo.FindById(id);
+            var leavetype = await _repo.FindById(id);
             if (leavetype == null)
             {
                 return NotFound();
             }
 
-            var isSuccess = _repo.Delete(leavetype);
+            var isSuccess = await _repo.Delete(leavetype);
             if (!isSuccess)
             {
                 return BadRequest();
@@ -156,17 +157,17 @@ namespace Leave_Management_NET5.Controllers
         // POST: LeaveTypesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, LeaveTypeVM model)
+        public async Task<ActionResult> Delete(int id, LeaveTypeVM model)
         {
             try
             {
-                var leavetype = _repo.FindById(id);
+                var leavetype = await _repo.FindById(id);
                 if (leavetype == null)
                 {
                     return NotFound();
                 }
 
-                var isSuccess = _repo.Delete(leavetype);
+                var isSuccess = await _repo.Delete(leavetype);
                 if (!isSuccess)
                 {
                     return View(model);

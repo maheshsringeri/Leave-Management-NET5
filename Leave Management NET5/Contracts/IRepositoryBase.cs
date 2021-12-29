@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
 namespace Leave_Management_NET5.Contracts
 {
     public interface IRepositoryBase<T> where T : class
     {
-        ICollection<T> findAll();
-        T FindById(int id);
+        Task<ICollection<T>> findAll();
+        Task<T> FindById(int id);
 
-        bool isExists(int id);
-        bool Create(T entity);
-        bool Update(T entity);
-        bool Delete(T entity);
-        bool Save();
+        Task<bool> isExists(int id);
+        Task<bool> Create(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(T entity);
+        Task<bool> Save();
     }
 }

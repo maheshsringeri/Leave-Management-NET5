@@ -3,6 +3,7 @@ using Leave_Management_NET5.Data;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Leave_Management_NET5.Repository
 {
@@ -15,56 +16,56 @@ namespace Leave_Management_NET5.Repository
             _db = db;
         }
 
-        public bool Create(LeaveRequest entity)
+        public async Task<bool> Create(LeaveRequest entity)
         {
-            _db.LeaveRequests.Add(entity);
-            return Save();
+            await _db.LeaveRequests.AddAsync(entity);
+            return await Save();
         }
 
-        public bool Delete(LeaveRequest entity)
+        public async Task<bool> Delete(LeaveRequest entity)
         {
             _db.Remove(entity);
-            return Save();
+            return await Save();
         }
 
-        public ICollection<LeaveRequest> findAll()
+        public async Task<ICollection<LeaveRequest>> findAll()
         {
-            return _db.LeaveRequests
+            return await _db.LeaveRequests
                         .Include(q => q.RequestingEmployee)
                         .Include(q => q.ApprovedBy)
                         .Include(q => q.LeaveType)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public LeaveRequest FindById(int id)
+        public async Task<LeaveRequest> FindById(int id)
         {
-            return _db.LeaveRequests
+            return await _db.LeaveRequests
                         .Include(q => q.RequestingEmployee)
                         .Include(q => q.ApprovedBy)
                         .Include(q => q.LeaveType)
-                        .FirstOrDefault(q => q.Id == id);
+                        .FirstOrDefaultAsync(q => q.Id == id);
         }
 
-        public List<LeaveRequest> GetLeaveRequestsByEmployee(string employeeId)
+        public async Task<List<LeaveRequest>> GetLeaveRequestsByEmployee(string employeeId)
         {
-            return findAll().Where(q => q.RequestingEmployeeId == employeeId).ToList();
+            return (await findAll()).Where(q => q.RequestingEmployeeId == employeeId).ToList();
         }
 
-        public bool isExists(int id)
+        public async Task<bool> isExists(int id)
         {
-            var exists = _db.LeaveRequests.Any(q => q.Id == id);
+            var exists = await _db.LeaveRequests.AnyAsync(q => q.Id == id);
             return exists;
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            return _db.SaveChanges() > 0 ? true : false;
+            return await _db.SaveChangesAsync() > 0 ? true : false;
         }
 
-        public bool Update(LeaveRequest entity)
+        public async Task<bool> Update(LeaveRequest entity)
         {
             _db.LeaveRequests.Update(entity);
-            return Save();
+            return await Save();
         }
     }
 }
