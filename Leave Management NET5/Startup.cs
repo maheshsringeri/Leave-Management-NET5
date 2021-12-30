@@ -38,6 +38,8 @@ namespace Leave_Management_NET5
             services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
             services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             services.AddAutoMapper(typeof(Maps));
 
             services.AddDatabaseDeveloperPageExceptionFilter();

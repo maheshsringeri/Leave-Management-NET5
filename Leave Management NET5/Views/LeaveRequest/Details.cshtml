@@ -16,7 +16,7 @@
 else if (Model.Approved == true)
 {
     <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Approved By @Html.DisplayFor(model => model.ApprovedBy.Firstname) @Html.DisplayFor(model => model.ApprovedBy.Lastname) </h4>
+        <h4 class="alert-heading">Approved By @Html.DisplayFor(model => model.ApprovedBy.Firstname) @Html.DisplayFor(model => model.ApprovedBy.Lastname) [@Html.DisplayFor(model => model.ApprovedBy.Email)] </h4>
         <p><strong>@Html.DisplayNameFor(model => model.RequestingEmployeeId):</strong>  @Html.DisplayFor(model => model.RequestingEmployee.Firstname) @Html.DisplayFor(model => model.RequestingEmployee.Lastname) </p>
         <hr>
         <p class="mb-0">@Html.DisplayNameFor(model => model.DateRequested) - @Html.DisplayFor(model => model.DateRequested)</p>
@@ -25,7 +25,7 @@ else if (Model.Approved == true)
 else
 {
     <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">Rejected By @Html.DisplayFor(model => model.ApprovedBy.Firstname) @Html.DisplayFor(model => model.ApprovedBy.Lastname) </h4>
+        <h4 class="alert-heading">Rejected By @Html.DisplayFor(model => model.ApprovedBy.Firstname) @Html.DisplayFor(model => model.ApprovedBy.Lastname) [@Html.DisplayFor(model => model.ApprovedBy.Email)]</h4>
         <p><strong>@Html.DisplayNameFor(model => model.RequestingEmployeeId):</strong>  @Html.DisplayFor(model => model.RequestingEmployee.Firstname) @Html.DisplayFor(model => model.RequestingEmployee.Lastname) </p>
         <hr>
         <p class="mb-0">@Html.DisplayNameFor(model => model.DateRequested) - @Html.DisplayFor(model => model.DateRequested)</p>

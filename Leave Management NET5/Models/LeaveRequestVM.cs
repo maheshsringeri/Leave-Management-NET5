@@ -8,9 +8,9 @@ namespace Leave_Management_NET5.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Employee Name")]
+        
         public EmployeeVM RequestingEmployee { get; set; }
-
+        [Display(Name = "Employee Name")]
         public string RequestingEmployeeId { get; set; }
 
         [Display(Name = "Start Date")]
